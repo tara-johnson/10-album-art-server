@@ -11,6 +11,9 @@
 * Use the query to scrape an album art image off discogs.com
 * Send back a special webpage that includes the album art URL in an `img` tag.
 
+Add a new method to the `HTTPRequest` class called `queryParams` that returns
+a `Map<String, String>` of all query parameters on the request.
+
 Sample discogs searches:
 
 * <https://www.discogs.com/search/?q=thrice+vheissu&type=all>
