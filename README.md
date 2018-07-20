@@ -2,7 +2,6 @@
 
 ## Resources
 * [jsoup Java HTML Parser](https://jsoup.org/)
-* [Deploying Java on Heroku](https://devcenter.heroku.com/articles/deploying-java)
 
 ## Feature Tasks
 * Build a simple HTML page with a form with one text input.
