@@ -5,10 +5,10 @@ import org.jsoup.select.Elements;
 
 public class DiscCogs {
     public static void main(String[] args) throws Exception {
-        Document doc = Jsoup.connect("http://en.wikipedia.org/").get();
+        Document doc = Jsoup.connect("https://www.discogs.com/").get();
         System.out.println(doc.title());
-        Elements newsHeadlines = doc.select("#mp-itn b a");
-        for (Element headline : newsHeadlines) {
+        Elements albumCover = doc.select("#thumbnail_center");
+        for (Element img : albumCover) {
         }
     }
 }

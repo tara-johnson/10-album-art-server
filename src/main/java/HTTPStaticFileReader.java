@@ -15,7 +15,8 @@ public class HTTPStaticFileReader {
 
         // How do I load a file from resource folder?
         // https://stackoverflow.com/questions/15749192/how-do-i-load-a-file-from-resource-folder
-        String filepath = "C:\\Users\\tbeth\\iCloudDrive\\Desktop\\code-fellows\\java-401d1\\labs\\10-album-art-server\\src\\main\\resources\\static" + this.path;
+        String filepath = "C:\\Users\\tbeth\\iCloudDrive\\Desktop\\code-fellows\\java-401d1\\labs\\10-SearchDiscogs" +
+                "\\src\\main\\resources\\static" + this.path;
         File file = new File(filepath);
 
         try (Scanner scanner = new Scanner(file)) {
