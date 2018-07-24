@@ -1,6 +1,5 @@
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
 class MyHttpServer {
     public static final int PORT = 6789;
@@ -23,22 +22,33 @@ class MyHttpServer {
             BufferedWriter outToClient = new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream()));
 
             HTTPRequest request = new HTTPRequest(inFromClient);
-            HTTPStaticFileReader file = new HTTPStaticFileReader(request);
 
+            HTTPResponse response;
             try {
-                int statusCode = 200;
-                String body = file.getContents();
-                HTTPResponse response = new HTTPResponse(statusCode, body);
-                response.send(outToClient);
+                String body = route(request);
+                response = new HTTPResponse(200, body);
             } catch (FileNotFoundException e) {
-                HTTPResponse response = new HTTPResponse(404, "Could not find " + request.path);
-                response.send(outToClient);
-            } catch (IOException e) {
-               HTTPResponse response = new HTTPResponse(500, "Internal server error");
-               response.send(outToClient);
+                response = new HTTPResponse(404, "Could not find " + request.path);
+            } catch (Exception e) {
+                response = new HTTPResponse(500, "Internal server error");
             }
-
+            response.send(outToClient);
             System.out.println("closed request.");
         }
+    }
+
+    private static String route(HTTPRequest request) throws IOException {
+        String body = "";
+        if (request.path.startsWith("/search")) {
+            String query = request.queryParams().get("query");
+            String url = AlbumScraper.getAlbumArtUrl(query);
+            body += "<html>";
+            body += "<img src='" + url + "'>";
+            body += "</html>";
+        } else {
+            HTTPStaticFileReader file = new HTTPStaticFileReader(request);
+            body = file.getContents();
+        }
+        return body;
     }
 }
