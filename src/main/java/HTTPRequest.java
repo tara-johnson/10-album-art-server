@@ -28,34 +28,26 @@ public class HTTPRequest {
         }
     }
 
-    public static Map<String, String> queryParams() {
+    public Map<String, String> queryParams() {
         Map<String, String> params = new HashMap<>();
-        String example = "https://www.discogs.com/search/?q=thrice+vheissu&type=all";
+        if (this.path.contains("?")) {
+            String queryString = this.path.split("\\?")[1];
+            String[] pairs = queryString.split("&");
 
-        // urls are not required to have query params
-        if (!example.contains("?")) {
-            return params;
-        }
+            for (String pair : pairs) {
+                System.out.println(pair);
 
-        String querystring = example.split("\\?")[1];
-        String[] pairs = querystring.split("&");
-        for (String pair : pairs) {
-            System.out.println(pair);
+                String[] cells = pair.split("=");
+                String key = cells[0];
 
-            String[] cells = pair.split("=");
-            String key = cells[0];
-            String value = "";
+                String value = "";
 
-            // params aren't required to have a value
-            // keys can be present by themselves
-            // google.com/q=hotdog&animated&size=400
-            if (cells.length >= 2) {
-                value = cells[1];
+                if (cells.length >= 2) {
+                    value = cells[1];
+                }
+                params.put(key, value);
             }
-
-            params.put(key, value);
         }
-
         return params;
     }
 }

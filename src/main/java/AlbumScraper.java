@@ -12,16 +12,17 @@ public class AlbumScraper {
 
     public static String getAlbumArtUrl(String query) {
         try {
-            String url = "https://www.discogs.com/search/?q" + query + "&type=all";
+            String url = "https://www.discogs.com/search/?q=" + query + "&type=all";
             Document doc = Jsoup.connect(url).get();
             Elements albumCovers = doc.select(".thumbnail_center");
             Element span = albumCovers.get(0);
             Element img = span.child(0);
             String src = img.attr("data-src");
-            System.out.println(src);
+            System.out.println("String src: " + src);
+            return src;
         } catch (IOException e) {
-            System.out.println("Error");
+            e.printStackTrace();
         }
-        return "default";
+        return "C:\\Users\\tbeth\\iCloudDrive\\Desktop\\code-fellows\\java-401d1\\labs\\10-SearchDiscogs\\src\\main\\resources\\static\\images\\no_image.png";
     }
 }
